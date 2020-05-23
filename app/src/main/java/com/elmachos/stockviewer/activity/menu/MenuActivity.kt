@@ -19,12 +19,16 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
+        setupMenuRecyclerView()
+
+    }
+
+    private fun setupMenuRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.rec_view)
         val adapter = MenuViewAdapter(getItems())
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-
     }
 
     private fun getItems(): Array<ListData> {

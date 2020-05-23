@@ -1,23 +1,17 @@
 package com.elmachos.stockviewer.activity.stockview.table
 
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.elmachos.stockviewer.R
-import com.elmachos.stockviewer.activity.menu.MenuViewAdapter
 import com.elmachos.stockviewer.domain.Currency
-import com.elmachos.stockviewer.domain.ShareInformation
-import com.elmachos.stockviewer.domain.ShareInformationType
 import com.elmachos.stockviewer.domain.StockExchange
 import kotlinx.android.synthetic.main.fragment_stock_shares_chart_view.*
-import java.time.LocalDate
 import java.util.*
 
 private const val STOCK = "stock"
@@ -27,26 +21,6 @@ class StockSharesTableViewFragment : Fragment() {
 
     private var stock: StockExchange? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            stock = it.getSerializable(STOCK) as StockExchange
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_stock_shares_table_view, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupTitle()
-        setupTableView()
-    }
-
     companion object {
         @JvmStatic
         fun newInstance(stock: StockExchange) =
@@ -55,6 +29,23 @@ class StockSharesTableViewFragment : Fragment() {
                     putSerializable(STOCK, stock)
                 }
             }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            stock = it.getSerializable(STOCK) as StockExchange
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_stock_shares_table_view, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupTitle()
+        setupTableView()
     }
 
     private fun setupTitle() {

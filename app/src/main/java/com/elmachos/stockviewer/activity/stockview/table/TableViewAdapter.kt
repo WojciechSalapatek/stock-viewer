@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elmachos.stockviewer.R
@@ -29,25 +28,32 @@ class TableViewAdapter(private val itemListData: List<ShareViewData>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position==0) {
-            holder.shareNameView.setBackgroundResource(R.drawable.border_header)
-            holder.shareOpenPriceView.setBackgroundResource(R.drawable.border_header)
-            holder.shareClosePriceView.setBackgroundResource(R.drawable.border_header)
-            holder.shareCurrency.setBackgroundResource(R.drawable.border_header)
-            holder.shareDate.setBackgroundResource(R.drawable.border_header)
-            holder.shareNameView.setTextColor(Color.WHITE)
-            holder.shareOpenPriceView.setTextColor(Color.WHITE)
-            holder.shareClosePriceView.setTextColor(Color.WHITE)
-            holder.shareCurrency.setTextColor(Color.WHITE)
-            holder.shareDate.setTextColor(Color.WHITE)
-            return
+        if (position == 0) {
+            setupTableHeader(holder)
+        } else {
+            setupTableRow(holder, position)
         }
-        val shareData: ShareViewData = itemListData[position-1]
-        holder.shareNameView.text = itemListData[position-1].shareName
-        holder.shareOpenPriceView.text = itemListData[position-1].openVal?.toString()
-        holder.shareClosePriceView.text = itemListData[position-1].closeVal?.toString()
-        holder.shareCurrency.text = itemListData[position-1].currency.label
-        holder.shareDate.text = itemListData[position-1].date.toString()
+    }
+
+    private fun setupTableRow(holder: ViewHolder, position: Int) {
+        holder.shareNameView.text = itemListData[position - 1].shareName
+        holder.shareOpenPriceView.text = itemListData[position - 1].openVal?.toString()
+        holder.shareClosePriceView.text = itemListData[position - 1].closeVal?.toString()
+        holder.shareCurrency.text = itemListData[position - 1].currency.label
+        holder.shareDate.text = itemListData[position - 1].date.toString()
+    }
+
+    private fun setupTableHeader(holder: ViewHolder) {
+        holder.shareNameView.setBackgroundResource(R.drawable.border_header)
+        holder.shareOpenPriceView.setBackgroundResource(R.drawable.border_header)
+        holder.shareClosePriceView.setBackgroundResource(R.drawable.border_header)
+        holder.shareCurrency.setBackgroundResource(R.drawable.border_header)
+        holder.shareDate.setBackgroundResource(R.drawable.border_header)
+        holder.shareNameView.setTextColor(Color.WHITE)
+        holder.shareOpenPriceView.setTextColor(Color.WHITE)
+        holder.shareClosePriceView.setTextColor(Color.WHITE)
+        holder.shareCurrency.setTextColor(Color.WHITE)
+        holder.shareDate.setTextColor(Color.WHITE)
     }
 
     override fun getItemCount() = itemListData.size + 1
