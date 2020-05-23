@@ -8,4 +8,4 @@ android:id="@+id/rec_view"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:scrollbars="vertical"
-tools:context=".menu.MenuActivity"/>
+tools:context=".activity.menu.MenuActivity"/>

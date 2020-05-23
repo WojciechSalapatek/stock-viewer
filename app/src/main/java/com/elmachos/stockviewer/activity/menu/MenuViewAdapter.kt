@@ -1,5 +1,8 @@
-package com.elmachos.stockviewer.menu
+package com.elmachos.stockviewer.activity.menu
 
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +10,15 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.elmachos.stockviewer.R
+import com.elmachos.stockviewer.activity.stockview.StockSharesViewActivity
 
-class MenuViewAdapter(private val itemListData: Array<ListData>) : RecyclerView.Adapter<MenuViewAdapter.ViewHolder>() {
+class MenuViewAdapter(private val itemListData: Array<ListData>) :
+    RecyclerView.Adapter<MenuViewAdapter.ViewHolder>() {
+
+    val TAG = "MENU"
 
     class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val imageView: ImageView = listItemView.findViewById(R.id.item_img_mnu_view)
@@ -25,15 +33,15 @@ class MenuViewAdapter(private val itemListData: Array<ListData>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val myListData: ListData = itemListData[position]
+        val stock: ListData = itemListData[position]
         holder.textView.text = itemListData[position].description
         holder.imageView.setImageResource(itemListData[position].imgId)
         holder.layout.setOnClickListener { view ->
-            Toast.makeText(
-                view.context,
-                "click on item: " + myListData.description,
-                Toast.LENGTH_LONG
-            ).show()
+            Log.d(TAG, "Selected stock: ${stock.stock.stockName}")
+            val intent = Intent(view.context, StockSharesViewActivity::class.java).apply {
+                putExtra(SELECTED_STOCK, stock.stock)
+            }
+            startActivity(view.context, intent, Bundle())
         }
     }
 

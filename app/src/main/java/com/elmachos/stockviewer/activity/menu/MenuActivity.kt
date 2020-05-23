@@ -1,11 +1,13 @@
-package com.elmachos.stockviewer.menu
+package com.elmachos.stockviewer.activity.menu
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elmachos.stockviewer.R
-import com.elmachos.stockviewer.domain.StockExchangeProvider
+import com.elmachos.stockviewer.domain.StockExchange
+
+const val SELECTED_STOCK = "com.elmachos.activites.menu.STOCK"
 
 class MenuActivity : AppCompatActivity() {
 
@@ -26,8 +28,8 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun getItems(): Array<ListData> {
-        return StockExchangeProvider.getDefinedStockExchanges()
-            .map { ListData(it.name, R.drawable.ic_money) }
+        return StockExchange.values()
+            .map { ListData(it.name, R.drawable.ic_money, it) }
             .toTypedArray()
     }
 }

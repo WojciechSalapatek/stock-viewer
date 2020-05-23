@@ -1,11 +1,7 @@
 package com.elmachos.stockviewer.domain
 
-data class StockExchange(val name: String){}
+import java.io.Serializable
 
-class StockExchangeProvider {
-    companion object {
-        fun getDefinedStockExchanges(): Set<StockExchange> {
-            return setOf(StockExchange("Dummy Stock"))
-        }
-    }
+enum class StockExchange(val stockName: String) : Serializable {
+    GWP_POLAND("Geiłda Papirów Wartościowych - Poland")
 }
