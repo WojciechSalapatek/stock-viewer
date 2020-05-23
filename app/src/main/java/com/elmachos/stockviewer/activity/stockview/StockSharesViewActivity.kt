@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.elmachos.stockviewer.R
 import com.elmachos.stockviewer.activity.menu.SELECTED_STOCK
+import com.elmachos.stockviewer.activity.stockview.chart.StockSharesChartViewFragment
+import com.elmachos.stockviewer.activity.stockview.table.StockSharesTableViewFragment
 import com.elmachos.stockviewer.domain.StockExchange
 import kotlinx.android.synthetic.main.activity_stock_shares_view.*
 

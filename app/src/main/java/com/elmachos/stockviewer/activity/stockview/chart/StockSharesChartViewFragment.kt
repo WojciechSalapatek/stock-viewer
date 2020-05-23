@@ -1,4 +1,4 @@
-package com.elmachos.stockviewer.activity.stockview
+package com.elmachos.stockviewer.activity.stockview.chart
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +12,7 @@ import kotlinx.android.synthetic.main.fragment_stock_shares_chart_view.*
 
 private const val STOCK = "stock"
 
-
-class StockSharesTableViewFragment : Fragment() {
+class StockSharesChartViewFragment : Fragment() {
 
     private var stock: StockExchange? = null
 
@@ -28,7 +27,7 @@ class StockSharesTableViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_stock_shares_table_view, container, false)
+        return inflater.inflate(R.layout.fragment_stock_shares_chart_view, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +38,7 @@ class StockSharesTableViewFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(stock: StockExchange) =
-            StockSharesTableViewFragment().apply {
+            StockSharesChartViewFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(STOCK, stock)
                 }

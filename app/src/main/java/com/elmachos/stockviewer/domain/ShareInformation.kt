@@ -1,0 +1,23 @@
+package com.elmachos.stockviewer.domain
+
+import java.util.*
+
+data class ShareInformation(
+    val shareName: String,
+    val currency: Currency,
+    val value: Double,
+    val type: ShareInformationType,
+    val date: Date
+) {}
+
+enum class ShareInformationType {
+    OPEN_PRICE,
+    CLOSE_PRICE,
+    OTHER,
+}
+
+enum class Currency(val label: String) {
+    PLN("PLN"),
+    EUR("EUR"),
+    USD("USD")
+}
