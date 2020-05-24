@@ -19,5 +19,13 @@ enum class ShareInformationType {
 enum class Currency(val label: String) {
     PLN("PLN"),
     EUR("EUR"),
-    USD("USD")
+    UNKNOWN("Unknown"),
+    USD("USD");
+
+    companion object {
+        @JvmStatic
+        fun fromLabel(label: String?): Currency {
+            return values().find { it.label == label } ?: UNKNOWN
+        }
+    }
 }

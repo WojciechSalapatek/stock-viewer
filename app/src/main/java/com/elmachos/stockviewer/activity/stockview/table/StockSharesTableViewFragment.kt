@@ -13,6 +13,7 @@ import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.StockExchange
 import com.elmachos.stockviewer.net.ServiceLocator
 import kotlinx.android.synthetic.main.fragment_stock_shares_chart_view.*
+import org.apache.commons.lang3.time.DateUtils
 import java.util.*
 
 private const val STOCK = "stock"
@@ -66,11 +67,24 @@ class StockSharesTableViewFragment : Fragment() {
     }
 
     private fun getData() {
-        ServiceLocator.getSharesDataProvider().fetchAndParseForStockAndDate(stock, Date(), resultCallback = {onDataUpdated(it)})
+        ServiceLocator.getSharesDataProvider().fetchAndParseForStockAndDate(stock,  getLastNonWeekendDate(), resultCallback = {onDataUpdated(it)})
+    }
+
+    private fun getLastNonWeekendDate(): Date {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+        var date = cal.time
+        when (cal.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.SUNDAY -> date = DateUtils.addDays(date, -2)
+            Calendar.SATURDAY -> date = DateUtils.addDays(date, -1)
+        }
+        return date
     }
 
     private fun onDataUpdated(data: ShareInformationRecord) {
         adapterDataSet.addAll(data.toView())
+        adapter.notifyItemRangeChanged(0, adapterDataSet.size+1)
         adapter.notifyDataSetChanged()
     }
 }

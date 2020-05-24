@@ -12,7 +12,7 @@ abstract class SharesResponseParser: AsyncTask<ParsingParams, Unit, ShareInforma
     private val responseValidityPredicate = { res: String -> res.contains("<body>")}
     private lateinit var parsingParams: ParsingParams
 
-    abstract fun doParse(response: String?): ShareInformationRecord
+    abstract fun doParse(response: String): ShareInformationRecord
 
     protected fun preParse(response: String?) {
         if(response == null) throw Exception("Cannot parse response: $response")
@@ -21,7 +21,7 @@ abstract class SharesResponseParser: AsyncTask<ParsingParams, Unit, ShareInforma
 
     protected fun parse(response: String?): ShareInformationRecord{
         preParse(response)
-        return doParse(response)
+        return doParse(response!!)
     }
 
     override fun doInBackground(vararg params: ParsingParams?): ShareInformationRecord {
@@ -34,6 +34,14 @@ abstract class SharesResponseParser: AsyncTask<ParsingParams, Unit, ShareInforma
         super.onPostExecute(result)
         Log.d(TAG, "Parsing has been completed, invoking callback")
         parsingParams.parsingCallback.invoke(result)
+    }
+
+    protected fun error() {
+        error("")
+    }
+
+    protected fun error(what: String) {
+        throw Exception("Could not parse response, $what")
     }
 
 }
