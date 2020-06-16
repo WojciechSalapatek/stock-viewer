@@ -1,7 +1,7 @@
 package com.elmachos.stockviewer.activity.stockview
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.os.Bundle    
 import com.elmachos.stockviewer.R
 import com.elmachos.stockviewer.activity.menu.SELECTED_STOCK
 import com.elmachos.stockviewer.activity.stockview.chart.StockSharesChartViewFragment
