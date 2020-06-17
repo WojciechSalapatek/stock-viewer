@@ -2,10 +2,13 @@ package com.elmachos.stockviewer.activity.stockview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.widget.Button
 import com.elmachos.stockviewer.R
 import com.elmachos.stockviewer.activity.menu.SELECTED_STOCK
 import com.elmachos.stockviewer.activity.stockview.chart.StockSharesChartViewFragment
 import com.elmachos.stockviewer.activity.stockview.table.StockSharesTableViewFragment
+import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.StockExchange
 import kotlinx.android.synthetic.main.activity_stock_shares_view.*
 
@@ -17,32 +20,44 @@ class StockSharesViewActivity : AppCompatActivity() {
 
         val stock = intent.getSerializableExtra(SELECTED_STOCK) as StockExchange
 
-        val tableView = StockSharesTableViewFragment.newInstance(stock)
-        val chartView = StockSharesChartViewFragment.newInstance(stock)
-
-
-        setupFragments(tableView, chartView)
+        if(savedInstanceState == null) {
+            val tableView = StockSharesTableViewFragment.newInstance(stock)
+            val chartView = StockSharesChartViewFragment.newInstance(stock)
+            setupFragments(tableView, chartView)
+        }
     }
 
-    private fun setupFragments(tableView: StockSharesTableViewFragment, chartView: StockSharesChartViewFragment) {
+    private fun setupFragments(
+        tableView: StockSharesTableViewFragment,
+        chartView: StockSharesChartViewFragment
+    ) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.stock_shares_view, tableView)
+            replace(R.id.stock_shares_view, chartView)
             commit()
         }
 
-        table_view_button.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.stock_shares_view, tableView)
-                commit()
+        setupIfNotNull(table_view_button) { btn ->
+            btn.setOnClickListener {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.stock_shares_view, tableView)
+                    commit()
+                }
             }
         }
 
-        chart_view_button.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.stock_shares_view, chartView)
-                commit()
+        setupIfNotNull(chart_view_button) { btn ->
+            btn.setOnClickListener {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.stock_shares_view, chartView)
+                    commit()
+                }
             }
         }
     }
 
+    private fun setupIfNotNull(btn: Button?, setup: (b: Button) -> Unit) {
+        if (btn != null) {
+            setup(btn)
+        }
+    }
 }

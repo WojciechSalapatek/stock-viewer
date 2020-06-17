@@ -67,14 +67,15 @@ class StockSharesTableViewFragment : Fragment() {
     }
 
     private fun getData() {
-        ServiceLocator.getSharesDataProvider().fetchAndParseForStockAndDate(stock,  getLastNonWeekendDate(), resultCallback = {onDataUpdated(it)})
+        ServiceLocator.getSharesDataProvider().fetchAndParseForStockAndDate(stock,  getLastNonWeekendDateOrYesterday(), resultCallback = {onDataUpdated(it)})
     }
 
-    private fun getLastNonWeekendDate(): Date {
+    private fun getLastNonWeekendDateOrYesterday(): Date {
         val cal = Calendar.getInstance()
         cal.time = Date()
         cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
         var date = cal.time
+        date = DateUtils.addDays(date, -1)
         when (cal.get(Calendar.DAY_OF_WEEK)) {
             Calendar.SUNDAY -> date = DateUtils.addDays(date, -2)
             Calendar.SATURDAY -> date = DateUtils.addDays(date, -1)
@@ -84,7 +85,6 @@ class StockSharesTableViewFragment : Fragment() {
 
     private fun onDataUpdated(data: ShareInformationRecord) {
         adapterDataSet.addAll(data.toView())
-        adapter.notifyItemRangeChanged(0, adapterDataSet.size+1)
         adapter.notifyDataSetChanged()
     }
 }

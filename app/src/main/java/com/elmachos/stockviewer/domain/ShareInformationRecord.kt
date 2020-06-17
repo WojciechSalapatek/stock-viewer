@@ -1,9 +1,10 @@
 package com.elmachos.stockviewer.domain
 
 import com.elmachos.stockviewer.activity.stockview.table.ShareViewData
+import java.io.Serializable
 
 
-class ShareInformationRecord(private val shareInformation: Map<String, List<ShareInformation>>) {
+class ShareInformationRecord(private val shareInformation: Map<String, List<ShareInformation>>) : Serializable{
 
     companion object {
         @JvmStatic

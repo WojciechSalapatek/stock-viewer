@@ -41,9 +41,26 @@ class TableViewAdapter(private val itemListData: List<ShareViewData>) :
         holder.shareClosePriceView.text = itemListData[position - 1].closeVal?.toString()
         holder.shareCurrency.text = itemListData[position - 1].currency.label
         holder.shareDate.text = itemListData[position - 1].date.toString()
+
+        holder.shareNameView.setBackgroundResource(R.drawable.border)
+        holder.shareOpenPriceView.setBackgroundResource(R.drawable.border)
+        holder.shareClosePriceView.setBackgroundResource(R.drawable.border)
+        holder.shareCurrency.setBackgroundResource(R.drawable.border)
+        holder.shareDate.setBackgroundResource(R.drawable.border)
+        holder.shareNameView.setTextColor(Color.GRAY)
+        holder.shareOpenPriceView.setTextColor(Color.GRAY)
+        holder.shareClosePriceView.setTextColor(Color.GRAY)
+        holder.shareCurrency.setTextColor(Color.GRAY)
+        holder.shareDate.setTextColor(Color.GRAY)
     }
 
     private fun setupTableHeader(holder: ViewHolder) {
+        holder.shareNameView.setText(R.string.shareNameLavel)
+        holder.shareOpenPriceView.setText(R.string.openPriceLabel)
+        holder.shareClosePriceView.setText(R.string.closePriceLabel)
+        holder.shareCurrency.setText(R.string.currencyLabel)
+        holder.shareDate.setText(R.string.dateLabel)
+
         holder.shareNameView.setBackgroundResource(R.drawable.border_header)
         holder.shareOpenPriceView.setBackgroundResource(R.drawable.border_header)
         holder.shareClosePriceView.setBackgroundResource(R.drawable.border_header)
