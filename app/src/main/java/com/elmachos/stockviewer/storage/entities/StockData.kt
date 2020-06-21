@@ -1,5 +1,6 @@
 package com.elmachos.stockviewer.storage.entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,17 +8,23 @@ import com.elmachos.stockviewer.domain.Currency
 import java.util.*
 
 @Entity(tableName="stockdata")
-data class StockData (
-    @PrimaryKey
-    val uid: Int,
+class StockData (
     @ColumnInfo(name = "shareName")
+    @NonNull
     val shareName: String?,
     @ColumnInfo(name = "openVal")
+    @NonNull
     val openVal: Double?,
     @ColumnInfo(name = "closeVal")
+    @NonNull
     val closeVal: Double?,
     @ColumnInfo(name = "currency")
-    val currency: Currency?,
+    @NonNull
+    val currency: String?,
     @ColumnInfo(name = "date")
-    val date: Date?
-)
+    @NonNull
+    val date: String?
+) {
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int = 0
+}

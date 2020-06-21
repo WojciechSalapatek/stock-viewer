@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/search_by_share_name"
+        android:title="Search by share name" >
+    </item>
+
+    <item android:id="@+id/search_by_date"
+        android:title="Search by date" >
+    </item>
+
+    <item android:id="@+id/delete_all_data"
+        android:title="Delete all data" >
+    </item>
+</menu>

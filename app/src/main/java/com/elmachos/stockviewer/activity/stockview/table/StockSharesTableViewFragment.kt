@@ -12,8 +12,12 @@ import com.elmachos.stockviewer.R
 import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.StockExchange
 import com.elmachos.stockviewer.net.ServiceLocator
+import com.elmachos.stockviewer.storage.StockDatabase
+import com.elmachos.stockviewer.storage.dao.StockDataDao
+import com.elmachos.stockviewer.storage.entities.StockData
 import kotlinx.android.synthetic.main.fragment_stock_shares_chart_view.*
 import org.apache.commons.lang3.time.DateUtils
+import java.text.SimpleDateFormat
 import java.util.*
 
 private const val STOCK = "stock"
@@ -86,5 +90,16 @@ class StockSharesTableViewFragment : Fragment() {
         adapterDataSet.addAll(data.toView())
         adapter.notifyItemRangeChanged(0, adapterDataSet.size+1)
         adapter.notifyDataSetChanged()
+
+        if (StockDatabase.getDatabase(context).stockDataDao().getByDate(SimpleDateFormat("yyyy/MM/dd").format(Date())).size == 0) {
+            val dataList: MutableList<StockData> = emptyList<StockData>().toMutableList()
+            for (share in adapterDataSet) {
+                val dateString = SimpleDateFormat("yyyy/MM/dd").format(share.date)
+                val stockData = StockData(closeVal = share.closeVal, currency = share.currency.toString(), openVal = share.openVal, date = dateString, shareName = share.shareName)
+                dataList.add(stockData)
+            }
+
+            StockDatabase.getDatabase(context).stockDataDao().insertAll(*dataList.toTypedArray())
+        }
     }
 }
