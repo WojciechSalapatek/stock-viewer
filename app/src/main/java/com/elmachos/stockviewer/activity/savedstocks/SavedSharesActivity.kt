@@ -1,6 +1,5 @@
 package com.elmachos.stockviewer.activity.savedstocks
 
-import android.app.AlertDialog
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -44,7 +43,7 @@ class SavedSharesActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.search_by_share_name_dialog)
+        dialog.setContentView(R.layout.search_dialog)
         val body = dialog.findViewById(R.id.dialog_title) as TextView
         body.text = title
         val searchButton = dialog.findViewById(R.id.button_search) as Button
