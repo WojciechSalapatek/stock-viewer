@@ -5,23 +5,27 @@ import com.elmachos.stockviewer.domain.ShareInformation
 import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.ShareInformationType
 import com.elmachos.stockviewer.net.parser.util.HtmlWalker
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 class GPWResponseParser() : SharesResponseParser() {
 
     private val nameRegex = "<td class=\"left\">([^<]*)</td>"
     private val valueRegex = "<td class=\"text-right\">([^<]*)</td>"
     private val numberValueRegex = "<td class=\"text-right\">([0123456789,]*)</td>"
+    private val dateRegex = "<input type=\"text\" name=\"date\" class=\"form-control\" id=\"date\" value=\"([0123456789-]*)\">"
 
     override fun doParse(response: String): ShareInformationRecord {
-        // TODO fix the date and refactor this shit
         val sharesChunk = getSharesSectionChunk(response)
 
         if (sharesChunk.contains("Brak danych")) return ShareInformationRecord(emptyMap())
 
         val res: MutableList<ShareInformation> = mutableListOf()
 
-        var walker = HtmlWalker.ofString(sharesChunk)
+        val date = getDate(response)
+
+        val walker = HtmlWalker.ofString(sharesChunk)
         walker.skipToMatching("<table class=\"table footable\" data-sorting=\"true\" >")!!
         while (walker.skipToMatching("<tr>") != null) {
             walker.skipToMatching(nameRegex)
@@ -34,8 +38,8 @@ class GPWResponseParser() : SharesResponseParser() {
             walker.move()
             walker.move()
             val closePrice = numberValueRegex.toRegex().find(walker.take())?.groups?.get(1)?.value?.replace(',', '.')?.toDouble()
-            if (openPrice != null) res.add(ShareInformation(shareName, curr, openPrice, ShareInformationType.OPEN_PRICE, Date()))
-            if (closePrice != null) res.add(ShareInformation(shareName, curr, closePrice, ShareInformationType.CLOSE_PRICE, Date()))
+            if (openPrice != null) res.add(ShareInformation(shareName, curr, openPrice, ShareInformationType.OPEN_PRICE, date))
+            if (closePrice != null) res.add(ShareInformation(shareName, curr, closePrice, ShareInformationType.CLOSE_PRICE, date))
         }
 
 
@@ -47,6 +51,14 @@ class GPWResponseParser() : SharesResponseParser() {
         val matchResult = regex.find(response, 0)
         if(matchResult==null) error()
         return matchResult!!.value
+    }
+
+    private fun getDate(response: String): Date {
+        val walker = HtmlWalker.ofString(response)
+        walker.skipToMatching(dateRegex)
+        val dateString = dateRegex.toRegex().find(walker.take())?.groups?.get(1)?.value
+        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.UK)
+        return formatter.parse(dateString!!)!!
     }
 
 }
