@@ -13,7 +13,6 @@ import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.StockExchange
 import com.elmachos.stockviewer.net.ServiceLocator
 import com.elmachos.stockviewer.storage.StockDatabase
-import com.elmachos.stockviewer.storage.dao.StockDataDao
 import com.elmachos.stockviewer.storage.entities.StockData
 import kotlinx.android.synthetic.main.fragment_stock_shares_chart_view.*
 import org.apache.commons.lang3.time.DateUtils

@@ -3,8 +3,4 @@
     <item android:id="@+id/show_db"
         android:title="Show saved items" >
     </item>
-
-    <item android:id="@+id/save_to_db"
-        android:title="Save to database" >
-    </item>
 </menu>

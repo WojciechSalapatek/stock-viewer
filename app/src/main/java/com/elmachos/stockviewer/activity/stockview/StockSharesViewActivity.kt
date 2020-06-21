@@ -81,10 +81,6 @@ class StockSharesViewActivity : AppCompatActivity() {
                 showDbRecords()
                 true
             }
-            R.id.save_to_db -> {
-                saveToDb()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -92,12 +88,5 @@ class StockSharesViewActivity : AppCompatActivity() {
     private fun showDbRecords() {
         val intent = Intent(this, SavedSharesActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun saveToDb() {
-        val stock = intent.getSerializableExtra(SELECTED_STOCK) as StockExchange
-        println("gowno")
-        //StockDatabase.getDatabase(this).stockDataDao(stock)
-        //save to database
     }
 }
