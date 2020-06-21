@@ -3,21 +3,16 @@ package com.elmachos.stockviewer.activity.stockview
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.core.content.ContextCompat
 import com.elmachos.stockviewer.R
 import com.elmachos.stockviewer.activity.menu.SELECTED_STOCK
 import com.elmachos.stockviewer.activity.savedstocks.SavedSharesActivity
 import com.elmachos.stockviewer.activity.stockview.chart.StockSharesChartViewFragment
 import com.elmachos.stockviewer.activity.stockview.table.StockSharesTableViewFragment
-import com.elmachos.stockviewer.domain.ShareInformationRecord
 import com.elmachos.stockviewer.domain.StockExchange
-import com.elmachos.stockviewer.storage.StockDatabase
 import kotlinx.android.synthetic.main.activity_stock_shares_view.*
 
 class StockSharesViewActivity : AppCompatActivity() {
@@ -40,7 +35,7 @@ class StockSharesViewActivity : AppCompatActivity() {
         chartView: StockSharesChartViewFragment
     ) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.stock_shares_view, chartView)
+            replace(R.id.stock_shares_view, tableView)
             commit()
         }
 

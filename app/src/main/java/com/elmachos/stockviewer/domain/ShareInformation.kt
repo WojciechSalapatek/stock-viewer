@@ -1,14 +1,15 @@
 package com.elmachos.stockviewer.domain
 
+import java.io.Serializable
 import java.util.*
 
-data class ShareInformation(
+data class ShareInformation (
     val shareName: String,
     val currency: Currency,
     val value: Double,
     val type: ShareInformationType,
     val date: Date
-) {}
+): Serializable {}
 
 enum class ShareInformationType {
     OPEN_PRICE,
